@@ -28,12 +28,8 @@ class MyGraph(adjacencyList: MutableMap<Int, MutableList<Int>>): Graph(adjacency
     }
 
     override fun removeVertex(vertex: Int) {
-        if (!adjacencyList.containsKey(vertex)) return
-
-        adjacencyList.remove(vertex)
-
-        for (neighbors in adjacencyList.values) {
-            neighbors.removeIf { it == vertex }
+        adjacencyList.remove(vertex)?.let {
+            adjacencyList.values.forEach { it.remove(vertex) }
         }
     }
 
@@ -52,7 +48,7 @@ class MyGraph(adjacencyList: MutableMap<Int, MutableList<Int>>): Graph(adjacency
     }
 
     override fun getNeighbors(vertex: Int): List<Int> {
-        return adjacencyList[vertex] ?: emptyList()
+        return adjacencyList[vertex].orEmpty()
     }
 
     override fun isAdjacent(vertex1: Int, vertex2: Int): Boolean {
@@ -64,10 +60,6 @@ class MyGraph(adjacencyList: MutableMap<Int, MutableList<Int>>): Graph(adjacency
     }
 
     override fun getEdgeCount(): Int {
-        var count = 0
-        for (ns in adjacencyList.values) {
-            count += ns.size
-        }
-        return count / 2
+        return adjacencyList.values.sumOf { it.size } / 2
     }
 }
