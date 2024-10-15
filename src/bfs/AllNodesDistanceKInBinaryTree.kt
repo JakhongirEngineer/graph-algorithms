@@ -5,7 +5,10 @@ class AllNodesDistanceKInBinaryTree {
         var left: TreeNode? = null
         var right: TreeNode? = null
     }
-
+    // https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/
+    // step1: build graph
+    // step2: use BFS to visit level by level manner starting from the target node
+    // time and space: O(N)
     fun distanceK(root: TreeNode?, target: TreeNode?, k: Int): List<Int> {
         if (root == null || target == null) return emptyList()
 
